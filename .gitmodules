@@ -1,0 +1,12 @@
+[submodule "github.com/powerline/fonts"]
+  path = github.com/powerline/fonts
+  url = https://github.com/powerline/fonts.git
+[submodule "github.com/VundleVim/Vundle.vim"]
+  path = github.com/VundleVim/Vundle.vim
+  url = https://github.com/VundleVim/Vundle.vim.git
+[submodule "github.com/robbyrussell/oh-my-zsh"]
+  path = github.com/robbyrussell/oh-my-zsh
+  url = https://github.com/robbyrussell/oh-my-zsh.git
+[submodule "github.com/junegunn/fzf"]
+  path = github.com/junegunn/fzf
+  url = https://github.com/junegunn/fzf.git

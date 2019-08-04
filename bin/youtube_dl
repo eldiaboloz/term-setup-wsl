@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# vim ft=bash
+set -e
+
+TARGET_DIR=${TARGET_DIR:-"$HOME"}
+
+youtube-dl --extract-audio --audio-format mp3 -o "${TARGET_DIR}/%(title)s-%(id)s.%(ext)s" --verbose "$@"

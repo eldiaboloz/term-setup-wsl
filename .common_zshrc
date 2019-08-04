@@ -1,0 +1,35 @@
+# vim: set filetype=sh
+export ZSH=$HOME/.oh-my-zsh
+export ZSH_CUSTOM=$HOME/dev/term-setup/oh-my-zsh/custom
+ZSH_THEME="agnoster-light"
+
+plugins=()
+fpath=($HOME/dev/term-setup/.zsh-completions $fpath)
+DISABLE_AUTO_UPDATE="true"
+
+source $ZSH/oh-my-zsh.sh
+
+[ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && \
+  source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+[ -f "$HOME/dev/term-setup/.zshrc" ] && source "$HOME/dev/term-setup/.zshrc"
+
+alias fix_kbd='setxkbmap -layout "us,bg" -model "pc104" -variant "euro,phonetic" -option "grp:shifts_toggle,grp_led:scroll";xmodmap ~/.Xmodmap'
+alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
+
+alias gpgc='gpg --cipher-algo AES256 --armor -c'
+alias gpgd='gpg --decrypt'
+
+alias gl='git log --stat'
+alias glp='git log -p'
+
+alias snmap='nmap -T5 -sP'
+
+alias lsal="ls --color=never -al"
+
+alias prjup="$HOME/dev/term-setup/scripts/scm/git_push_svn_rebase_work.sh"
+alias gitdc="git diff --cached"
+alias gitd="git diff"
+alias gitco="git checkout"
+
+alias stod="stod(){date '+%Y-%m-%d %H:%M:%S' -d \"@\${1}\"; unset -f stod;};stod"

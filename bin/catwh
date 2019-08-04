@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+bindirs="$(echo $PATH | tr ":" "\n" | grep -e "^$HOME/bin" | tr '\n' ' ')"
+
+gen_list() {
+    find \
+        $(echo "$bindirs" | xargs -d '\n' -I{} echo "{}" | tr '\n' ' ') \
+        -mindepth 1 \
+        -maxdepth 1 \
+        -type f \
+        -executable
+}
+
+show_list() {
+    for x in "$@"; do
+        if [ ! -f "$x" ]; then
+            found=""
+            x="$(basename "$x")"
+            for y in $bindirs; do
+                if [ -f "$y/$x" ]; then
+                    found="yes"
+                    x="$y/$x"
+                    break
+                fi
+            done
+            [ -z "$found" ] && { echo "#catwh_file:$x is not a regular file! skipping" 1>&2;continue; }
+        fi
+        if [[ "$CATWH_PATH_ONLY" == "yes" ]]; then
+            echo "$x"
+        else
+            echo "#file://$x"
+            cat "$x"
+        fi
+    done
+
+}
+if [ "$#" -ge 1 ]; then
+    # do not escape list
+    show_list $@
+else
+    if [[ -t "1" && "$(ps -o stat= -p $$)" == "S+" ]]; then
+        # output selected with fzf to terminal
+        # do not escape list
+        show_list $(gen_list | fzf --multi --reverse --border)
+    else
+        # only filenames
+        gen_list | sed -r -e 's#(/.*/)##g'
+        # full path list
+        gen_list
+    fi
+fi
