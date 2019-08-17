@@ -30,3 +30,4 @@ fi
 if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
+alias term='~/dev/term-setup/ubuntu-on-WSL.sh xfce4-terminal -e "zsh -l"'

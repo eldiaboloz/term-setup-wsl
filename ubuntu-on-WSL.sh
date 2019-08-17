@@ -6,9 +6,10 @@ set -e
   && mkdir -pv "$HOME/dev" \
   && git clone --recurse-submodules http://github.com/eldiaboloz/term-setup-wsl.git "$HOME/dev/term-setup" \
   && $HOME/dev/term-setup/bin/create_symlinks.sh \
-  && source $HOME/.profile
+  && source $HOME/.profile \
+  && NEED_UPDATE=y
 
-if [ ! -z "$1" ]; then
+if [ ! -z "${NEED_UPDATE}" ]; then
   grep -R "longsleep/golang-backports" /etc/apt/sources.list.d/ | grep -v "#" >/dev/null 2>&1 \
     || sudo add-apt-repository ppa:longsleep/golang-backports
   sudo -H apt-get update
@@ -28,7 +29,12 @@ if [ ! -z "$1" ]; then
     libc-dev \
     php-cli \
     jq \
-    silversearcher-ag
+    silversearcher-ag \
+    x11-xserver-utils \
+    x11-utils \
+    x11-xkb-utils
   ( cd $HOME/dev/term-setup/github.com/junegunn/fzf && make)
   ( cd $HOME/dev/term-setup/github.com/powerline/fonts && ./install.sh )
 fi
+export DISPLAY=:0
+exec -- "$@"
